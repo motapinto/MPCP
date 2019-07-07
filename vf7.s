@@ -4,6 +4,8 @@
 pi: .double 3.14159265359
 
 //extern double vf7(double x)
+//y = 1/sqrt(4-x) se x < 0
+//y = sqrt((x+pi)^3) se x>=0
 
 vf7:
 		fcmp 	d0, 0

@@ -2,20 +2,19 @@
 .global simd1b
 .type simd1b,"function"
 
-//X0 - end-base ; W1 - num ; S0 - k
+//extern void simd1b(float *Z1, int n, float k);
+//x0 = *z1 ; x1 = num elementos ; k = s0
 
 simd1b:
-		lsr W1, W1, 2 //divide por 4
-		dup, V2.4S, X0
+		lsr		w1, w1, 2 //w1 = w1 / 4
 
 ciclo:
-		cbz W1, fim
-		ldr Q1, [X0]
-		FMUL V3.4s, V1.4s, V2.4s
-		str Q3, [X0], #16 // <=> str Q3, [X0], add X0, X0, 16
-		sub W1, W1, #1
+		cbz		w1, fim
+		ldr		q1, [x0]
+		fmul	v1.4s, v1.4s, v0.s[0] //v0.s[0] ou v0.4s[0]
+		str		q1, [x0], 16
+		sub 	w1, w1, 1
 		b ciclo
 
 fim:
 		ret
-
